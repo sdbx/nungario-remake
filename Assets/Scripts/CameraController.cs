@@ -9,6 +9,8 @@ public class CameraController : MonoBehaviour
     public float XOffset = 0, YOffSet = 0, ZOffset = 0;
     public GameObject FollowingObject;
 
+    public int DistanceLimit = 10;
+
     private void Awake()
     {
 
@@ -18,27 +20,20 @@ public class CameraController : MonoBehaviour
         var x = Input.GetAxis("Mouse X");
         var y = Input.GetAxis("Mouse Y");
 
-		if(x>0)
-		{
 
-		}
-		if(x<0)
-		{
 
-		}
-		if(y>0)
-		{
+        
+        transform.parent.position = FollowingObject.transform.position;
+        
+        
+    
 
-		}
-		if(y<0)
-		{
+        transform.localPosition = new Vector3(XOffset, YOffSet, ZOffset);
 
-		}
         transform.parent.Rotate(0f, 0f, y * YSens * Sens, Space.Self);
         transform.parent.Rotate(0f, x * XSens * Sens, 0f, Space.World);
-		
-		transform.localPosition = new Vector3(XOffset, YOffSet, ZOffset);
 
-        transform.parent.position = FollowingObject.transform.position;
+
     }
+
 }

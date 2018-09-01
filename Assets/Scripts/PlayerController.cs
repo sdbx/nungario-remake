@@ -2,8 +2,10 @@
 
 public class PlayerController : MonoBehaviour
 {
+    public GameObject DirectionObject;
+
     private Rigidbody rigidbody_;
-    private float speed_ = 10f;
+    public float Speed = 10f;
 
     private void Awake()
     {
@@ -12,10 +14,27 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        var horizontal = Input.GetAxis("Horizontal") * speed_;
-        var vertical = Input.GetAxis("Vertical") * speed_;
+        var horizontal = Input.GetAxis("Horizontal");
+        var vertical = Input.GetAxis("Vertical");
 
-        var force = new Vector3(horizontal, 0, vertical);
-        rigidbody_.AddForce(force, ForceMode.Acceleration);
+
+        var temp = DirectionObject.transform.rotation.y;
+
+        var dirForward = DirectionObject.transform.forward;
+        dirForward = new Vector3(dirForward.x,0f,dirForward.z);
+
+        var dirRight = DirectionObject.transform.right;
+        dirRight = new Vector3(dirRight.x,0f,dirRight.z);
+        
+
+        rigidbody_.AddForce(vertical * dirRight * Speed , ForceMode.Acceleration);
+        rigidbody_.AddForce(-horizontal * dirForward * Speed , ForceMode.Acceleration);
+        
+    }
+    private void OnDrawGizmos()
+    {
+
+
+        //Gizmos.DrawRay(transform.position,v3Direction);
     }
 }
